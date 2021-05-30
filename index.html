@@ -65,8 +65,86 @@
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
     });
 
+    // Making all the buttons functional here
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
-    // TODO - Make buttons functional
+    errorBtns[0].addEventListener("click", () => {
+       console.log("log");
+    });
+    errorBtns[1].addEventListener("click", () => {
+       console.error('error');
+    });
+    errorBtns[2].addEventListener("click", () => {
+       console.dir(document);
+    });
+    errorBtns[3].addEventListener("click", () => {
+       console.dirxml(document);
+    });
+    errorBtns[4].addEventListener("click", () => {
+       console.group('Group Starts Here');
+       console.log("start");
+    });
+    errorBtns[5].addEventListener("click", () => {
+       console.log("end");
+       console.groupEnd('Group Starts Here');
+    });
+    errorBtns[6].addEventListener("click", () => {
+       console.table([
+          {
+            first: "Hello",
+            second: "this"
+          },
+          {
+            first: "is a",
+            second: "test"
+          }
+       ]);
+    });
+    errorBtns[7].addEventListener("click", () => {
+       console.time("Timer");
+    });
+    errorBtns[8].addEventListener("click", () => {
+       console.timeEnd('Timer');
+    });
+    errorBtns[9].addEventListener("click", () => {
+       console.trace();
+    });
+    errorBtns[10].addEventListener("click", () => {
+       console.log("hey" + fakeVar);
+    });
+
+    // Custom Error
+    class customError extends Error {
+      constructor(message){
+        super(message);
+        this.name = "Warning: Deadly Error!";
+      }
+    }
+
+    // Function to test the custom error and try/catch/finally
+    function testTryCatch(){
+      console.log("This function seems to be working!");
+      let operator = document.querySelector('#operator');
+      operator.addEventListener('click', () => {
+        if (operator.value == '*'){
+          throw new customError("How dare you try to multiply?");
+        }
+      });
+    }
+
+    // Try Catch Finally Blocks
+    try {
+      let sum = 5 + 8;
+      testTryCatch();
+    } catch(error) {
+      alert(error.name + ":" + error.message);
+    } finally {
+      console.log("We finally made it to finally!!")
+    }
+
+    // Global Error Handler
+    window.onerror = function() {
+      console.log("We have encountered a critical error in the system, send backup immediately!");
+    }
   </script>
 </body>
 </html>
